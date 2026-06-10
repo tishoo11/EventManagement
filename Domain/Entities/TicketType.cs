@@ -23,6 +23,9 @@ namespace Event_Management_System.Domain.Entities
             if (price == null)
                 throw new ArgumentException(" Моля, въведете цена на билета.");
 
+            if (name.Trim().Length > 30)
+                throw new ArgumentException("Името на типа билет не може да съдържа повече от 30 символа.");
+
             Name = name.Trim();
             Price = price;
             Tickets = new List<Ticket>();
