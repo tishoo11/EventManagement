@@ -7,4 +7,5 @@ public interface ITicketTypeRepository
     IReadOnlyList<TicketType> GetAll();
     void Save(TicketType ticketType);
     void Update(TicketType ticketType);
+    void Delete(TicketType entity);
 }

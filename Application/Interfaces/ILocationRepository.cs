@@ -7,4 +7,5 @@ public interface ILocationRepository
     IReadOnlyList<Location> GetAll();
     void Save(Location location);
     void Update(Location location);
+    void Delete(Location entity);
 }

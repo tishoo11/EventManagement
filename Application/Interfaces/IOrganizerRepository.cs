@@ -7,4 +7,5 @@ public interface IOrganizerRepository
     IReadOnlyList<Organizer> GetAll();
     void Save(Organizer organizer);
     void Update(Organizer organizer);
+    void Delete(Organizer entity);
 }
