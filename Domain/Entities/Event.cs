@@ -115,7 +115,7 @@ namespace Event_Management_System.Domain.Entities
             Location.Edit(newLocationName.Trim(), Location.Address, Location.Capacity);
         }
 
-        public void ChangeCapacity(int newCapacity, int soldTickets)
+        public void ChangeCapacity(int newCapacity, int soldTickets, int locationCapacity)
         {
             if (soldTickets < 0)
                 throw new ArgumentException("Броят на продадените билети не може да бъде отрицателен.");
@@ -123,11 +123,16 @@ namespace Event_Management_System.Domain.Entities
             if (newCapacity <= 0)
                 throw new ArgumentException("Капацитетът на събитието трябва да бъде по-голям от 0.");
 
+            if (locationCapacity <= 0)
+                throw new ArgumentException("Капацитетът на локацията трябва да бъде по-голям от 0.");
+
             if (newCapacity < soldTickets)
                 throw new InvalidOperationException("Капацитетът не може да бъде по-малък от броя на продадените билети.");
 
             if (Location != null && newCapacity > Location.Capacity)
                 throw new InvalidOperationException("Капацитетът на събитието не може да бъде по-голям от капацитета на локацията.");
+
+            
 
             Capacity = newCapacity;
         }

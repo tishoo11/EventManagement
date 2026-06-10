@@ -1,7 +1,7 @@
 ﻿using Event_Management_System.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace EventManagement11.ConsoleUI.Infrastructure
+namespace EventManagement11.Infrastructure
 {
     internal class EventDBContext : DbContext
     {
