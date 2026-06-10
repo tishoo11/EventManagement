@@ -1,9 +1,5 @@
-using EventManagement11.Domain.Entities;
-using EventManagement11.Domain.ValueObjects;
 using EventManagement11.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using EventManagement11.Domain.Entities;
 
 namespace EventManagement11.Application.Services;
 

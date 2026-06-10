@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EventManagement11.Domain.ValueObjects
+﻿namespace EventManagement11.Domain.ValueObjects
 {
     public class Money
     {
@@ -10,6 +8,7 @@ namespace EventManagement11.Domain.ValueObjects
         protected Money()
         {
         }
+
         public Money(decimal amount)
         {
             if (amount < 0)

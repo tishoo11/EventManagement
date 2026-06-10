@@ -1,6 +1,4 @@
 ﻿using EventManagement11.Domain.ValueObjects;
-using System;
-using System.Collections.Generic;
 
 namespace EventManagement11.Domain.Entities
 {
