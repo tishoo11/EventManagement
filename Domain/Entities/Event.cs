@@ -79,53 +79,80 @@ namespace Event_Management_System.Domain.Entities
             Tickets = new List<Ticket>();
         }
 
-        // set-овете на свойствата са private, за да не могат обектите да се променят отвън.
-        // Трябва да имплементирате методите за контролирана промяна на вече създадените обекти от клас Event
-        // Помислете какви валидицаии са нужни.
-        public void EditName( string name)
+        public void EditName(string name)
         {
-            // TODO
-            // Капацитетът на събитието не може да бъде по-голям от капацитета на локацията.
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Моля, въведете име на събитието.");
+
+            if (name.Trim().Length > 50)
+                throw new ArgumentException("Името на събитието не може да съдържа повече от 50 символа.");
 
             Name = name.Trim();
-            
         }
-        
+
         public void Reschedule(DateTime newDate)
         {
-            //TODO
+            if (newDate == default)
+                throw new ArgumentException("Моля, въведете дата на събитието.");
+
+            if (newDate.Date < DateTime.Today)
+                throw new ArgumentException("Датата на събитието не може да бъде в миналото.");
+
+            Date = newDate.Date;
         }
+
         public void ChangeLocation(string newLocationName)
         {
-             //TODO
+            if (string.IsNullOrWhiteSpace(newLocationName))
+                throw new ArgumentException("Моля, въведете нова локация.");
+
+            if (newLocationName.Trim().Length > 50)
+                throw new ArgumentException("Името на локацията не може да съдържа повече от 50 символа.");
+
+            if (Location == null)
+                throw new InvalidOperationException("Локацията на събитието не е заредена.");
+
+            Location.Edit(newLocationName.Trim(), Location.Address, Location.Capacity);
         }
+
         public void ChangeCapacity(int newCapacity, int soldTickets)
         {
-            if (newCapacity < soldTickets)
-            {
-                throw new InvalidOperationException(
-                    "Капацитетът не може да бъде по-малък от броя на продадените билети.");
-            }
+            if (soldTickets < 0)
+                throw new ArgumentException("Броят на продадените билети не може да бъде отрицателен.");
 
-            if (newCapacity > Location.Capacity)
-            {
-                throw new InvalidOperationException(
-                    "Капацитетът на събитието не може да бъде по-голям от капацитета на локацията.");
-            }
-            //TODO
+            if (newCapacity <= 0)
+                throw new ArgumentException("Капацитетът на събитието трябва да бъде по-голям от 0.");
+
+            if (newCapacity < soldTickets)
+                throw new InvalidOperationException("Капацитетът не може да бъде по-малък от броя на продадените билети.");
+
+            if (Location != null && newCapacity > Location.Capacity)
+                throw new InvalidOperationException("Капацитетът на събитието не може да бъде по-голям от капацитета на локацията.");
+
+            Capacity = newCapacity;
         }
+
         public void ChangeType(string newEventType)
         {
-            //TODO
+            if (string.IsNullOrWhiteSpace(newEventType))
+                throw new ArgumentException("Моля, въведете тип на събитието.");
+
+            if (newEventType.Trim().Length > 30)
+                throw new ArgumentException("Типът на събитието не може да съдържа повече от 30 символа.");
+
+            EventType = newEventType.Trim();
         }
+
         public int GetAvailableCapacity(int soldTickets)
         {
-            //TODO
+            if (soldTickets < 0)
+                throw new ArgumentException("Броят на продадените билети не може да бъде отрицателен.");
+
             return Capacity - soldTickets;
         }
+
         public bool HasAvailableCapacity(int soldTickets)
         {
-            // TODO
             return GetAvailableCapacity(soldTickets) > 0;
         }
     }

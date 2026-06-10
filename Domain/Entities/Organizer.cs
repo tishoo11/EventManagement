@@ -23,6 +23,12 @@ namespace Event_Management_System.Domain.Entities
             if (string.IsNullOrWhiteSpace(phone))
                 throw new ArgumentException( "Моля, въведете телефон на организатора.");
 
+            if (phone.Trim().Length > 15)
+                throw new ArgumentException("Телефонът на организатора не може да съдържа повече от 15 символа.");
+
+            if (name.Trim().Length > 50)
+                throw new ArgumentException("Името на организатора не може да съдържа повече от 50 символа.");
+
             Name = name.Trim();
             ContactNumber = phone.Trim();
 

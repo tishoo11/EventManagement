@@ -46,6 +46,18 @@ namespace Event_Management_System.Domain.Entities
                     "Капацитетът на локацията трябва да бъде по-голям от 0.");
             }
 
+            if (name.Trim().Length > 50)
+            {
+                throw new ArgumentException(
+                    "Името на локацията не може да съдържа повече от 50 символа.");
+            }
+
+            if (address.Trim().Length > 100)
+            {
+                throw new ArgumentException(
+                    "Адресът на локацията не може да съдържа повече от 100 символа.");
+            }
+
             Name = name.Trim();
             Address = address.Trim();
             Capacity = capacity;
@@ -73,6 +85,18 @@ namespace Event_Management_System.Domain.Entities
             {
                 throw new ArgumentException(
                     "Капацитетът на локацията трябва да бъде по-голям от 0.");
+            }
+
+            if (name.Trim().Length > 50)
+            {
+                throw new ArgumentException(
+                    "Името на локацията не може да съдържа повече от 50 символа.");
+            }
+
+            if (address.Trim().Length > 100)
+            {
+                throw new ArgumentException(
+                    "Адресът на локацията не може да съдържа повече от 100 символа.");
             }
 
             Name = name.Trim();
