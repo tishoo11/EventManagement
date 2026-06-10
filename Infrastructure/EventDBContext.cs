@@ -1,4 +1,4 @@
-﻿using Event_Management_System.Domain.Entities;
+﻿using EventManagement11.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventManagement11.Infrastructure

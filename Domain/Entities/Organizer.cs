@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Event_Management_System.Domain.Entities
+namespace EventManagement11.Domain.Entities
 {
     public class Organizer
     {

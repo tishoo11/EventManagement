@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Event_Management_System.Domain.Enums
+namespace EventManagement11.Domain.Enums
 {
     public enum TicketStatus
     {

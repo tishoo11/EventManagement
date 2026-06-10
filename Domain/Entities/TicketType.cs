@@ -1,8 +1,8 @@
-﻿using Event_Management_System.Domain.ValueObjects;
+﻿using EventManagement11.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 
-namespace Event_Management_System.Domain.Entities
+namespace EventManagement11.Domain.Entities
 {
     public class TicketType
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Event_Management_System.Domain.ValueObjects
+namespace EventManagement11.Domain.ValueObjects
 {
     public class Money
     {

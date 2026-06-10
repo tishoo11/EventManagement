@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Event_Management_System.Domain.Entities
+namespace EventManagement11.Domain.Entities
 {
     public class Location
     {
