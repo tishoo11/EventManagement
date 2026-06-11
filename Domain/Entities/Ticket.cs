@@ -1,6 +1,5 @@
 ﻿using EventManagement11.Domain.Enums;
 using EventManagement11.Domain.ValueObjects;
-using System;
 
 namespace EventManagement11.Domain.Entities
 {

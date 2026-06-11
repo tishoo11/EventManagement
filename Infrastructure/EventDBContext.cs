@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventManagement11.Infrastructure
 {
-    internal class EventDBContext : DbContext
+    public class EventDBContext : DbContext
     {
         public EventDBContext()
         {
