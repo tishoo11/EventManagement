@@ -5,26 +5,20 @@
         public int Id { get; private set; }
         public string Name { get; private set; }
         public DateTime Date { get; private set; }
-        public int Capacity { get; private set; } //Продадени билети ≤ Капацитет на събитието ≤ Капацитет на локацията
+        public int Capacity { get; private set; } 
         public string EventType { get; private set; }
 
-        //public string LocationName { get; private set; } 
 
-        // Външен ключ към Location
         public int LocationId { get; private set; }
 
-        // Navigation property
         public virtual Location Location { get; private set; }
 
-        // Външен ключ към Location
         public int OrganizerId { get; private set; }
 
-        // Navigation property
         public Organizer Organizer { get; private set; }
 
         public ICollection<Ticket> Tickets { get; private set; } = new List<Ticket>();
 
-        //Празният конструктор е нужен за Migration и EntityFramework
         
         protected Event()
         {
