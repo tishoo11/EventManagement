@@ -50,10 +50,9 @@ namespace EventManagement11.Domain.Entities
                 throw new ArgumentException("Кодът на билета не може да съдържа повече от 30 символа.");
 
             EventId = eventId;
-            TicketTypeId = ticketType.Id; //цената се взема автоматично от TicketType
+            TicketTypeId = ticketType.Id; 
             Code = code.Trim();
 
-            // цената се копира в Ticket, за да остане същата дори ако по-късно цената на типа билет бъде променена.
             Price = new Money(ticketType.Price.Amount);
 
             SoldAt = DateTime.Now;
