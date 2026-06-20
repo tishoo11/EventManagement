@@ -563,5 +563,26 @@ namespace EventManagement11.ConsoleUI
             PrintEvents(entity.Events.OrderBy(e => e.Date));
             Pause();
         }
+
+        private void CreateOrganizer()
+        {
+            try
+            {
+                Console.Clear();
+                Header("Добавяне на организатор");
+
+                var name = ReadRequired("Име: ");
+                var phone = ReadRequired("Телефон: ");
+
+                var entity = new Organizer(name, phone);
+                organizers.Create(entity);
+
+                Message($"Организаторът е създаден. ID: {entity.Id}");
+            }
+            catch (Exception ex)
+            {
+                Message(ex.Message);
+            }
+        }
     }
 }
