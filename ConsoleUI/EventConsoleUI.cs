@@ -33,7 +33,7 @@ namespace EventManagement11.ConsoleUI
             while (true)
             {
                 Console.Clear();
-                Header("        Event Management System");
+                Header("     Event Management System");
                 Console.WriteLine("1. Събития");
                 Console.WriteLine("2. Локации");
                 Console.WriteLine("3. Организатори");
@@ -75,7 +75,7 @@ namespace EventManagement11.ConsoleUI
             while (true)
             {
                 Console.Clear();
-                Header("Събития");
+                Header("             Събития");
                 Console.WriteLine("1. Всички");
                 Console.WriteLine("2. Добавяне");
                 Console.WriteLine("3. Редактиране");
@@ -142,7 +142,7 @@ namespace EventManagement11.ConsoleUI
             while (true)
             {
                 Console.Clear();
-                Header("Локации");
+                Header("             Локации");
                 Console.WriteLine("1. Всички");
                 Console.WriteLine("2. Добавяне");
                 Console.WriteLine("3. Редактиране");
@@ -185,7 +185,7 @@ namespace EventManagement11.ConsoleUI
             while (true)
             {
                 Console.Clear();
-                Header("Организатори");
+                Header("           Организатори");
                 Console.WriteLine("1. Всички");
                 Console.WriteLine("2. Добавяне");
                 Console.WriteLine("3. Редактиране");
@@ -224,7 +224,7 @@ namespace EventManagement11.ConsoleUI
             while (true)
             {
                 Console.Clear();
-                Header("Типове билети");
+                Header("          Типове билети");
                 Console.WriteLine("1. Всички");
                 Console.WriteLine("2. Добавяне");
                 Console.WriteLine("3. Редактиране на цена");
@@ -263,7 +263,7 @@ namespace EventManagement11.ConsoleUI
             while (true)
             {
                 Console.Clear();
-                Header("Билети");
+                Header("             Билети");
                 Console.WriteLine("1. Всички");
                 Console.WriteLine("2. Генериране");
                 Console.WriteLine("3. Отмяна");
@@ -830,9 +830,9 @@ namespace EventManagement11.ConsoleUI
         private static void Header(string text)
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("=======================================");
+            Console.WriteLine("=================================");
             Console.WriteLine(text);
-            Console.WriteLine("=======================================");
+            Console.WriteLine("=================================");
             Console.ResetColor();
             Console.WriteLine();
         }
