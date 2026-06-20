@@ -616,5 +616,14 @@ namespace EventManagement11.ConsoleUI
                 Message(ex.Message);
             }
         }
+
+        private void DeleteOrganizer()
+        {
+            Console.Clear();
+            Header("Изтриване на организатор");
+            var id = ReadInt("Organizer ID: ");
+            organizers.Delete(id);
+            Message("Организаторът е изтрит.");
+        }
     }
 }
