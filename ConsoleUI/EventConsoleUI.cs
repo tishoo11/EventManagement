@@ -422,5 +422,14 @@ namespace EventManagement11.ConsoleUI
                 Message(ex.Message);
             }
         }
+
+        private void DeleteEvent()
+        {
+            Console.Clear();
+            Header("Изтриване на събитие");
+            var id = ReadInt("Event ID: ");
+            events.Delete(id);
+            Message("Събитието е изтрито.");
+        }
     }
 }
