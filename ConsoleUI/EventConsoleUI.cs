@@ -69,5 +69,29 @@ namespace EventManagement11.ConsoleUI
                 }
             }
         }
+
+        private void EventsMenu()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Header("Събития");
+                Console.WriteLine("1. Всички");
+                Console.WriteLine("2. Добавяне");
+                Console.WriteLine("3. Редактиране");
+                Console.WriteLine("4. Изтриване");
+                Console.WriteLine("5. Търсене по име");
+                Console.WriteLine("6. Филтър по дата");
+                Console.WriteLine("7. Филтър по тип");
+                Console.WriteLine("8. Предстоящи");
+                Console.WriteLine("9. Най-посещавани");
+                Console.WriteLine("10. Проверка за свободна локация");
+                Console.WriteLine("11. Проверка за капацитет");
+                Console.WriteLine("0. Назад");
+                Console.WriteLine();
+
+                var choice = ReadInt("Избор: ");
+            }
+        }
     }
 }
