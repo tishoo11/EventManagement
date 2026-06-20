@@ -733,5 +733,14 @@ namespace EventManagement11.ConsoleUI
             tickets.Cancel(id);
             Message("Билетът е отменен.");
         }
+
+        private void MarkTicketAsUsed()
+        {
+            Console.Clear();
+            Header("Маркиране като използван");
+            var id = ReadInt("Ticket ID: ");
+            tickets.MarkAsUsed(id);
+            Message("Билетът е маркиран като използван.");
+        }
     }
 }
