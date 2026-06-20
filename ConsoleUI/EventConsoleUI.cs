@@ -350,5 +350,77 @@ namespace EventManagement11.ConsoleUI
                 Message(ex.Message);
             }
         }
+
+        private void EditEvent()
+        {
+            try
+            {
+                Console.Clear();
+                Header("Редактиране на събитие");
+
+                var id = ReadInt("Event ID: ");
+                var entity = events.GetById(id);
+
+                if (entity == null)
+                {
+                    Message("Събитието не е намерено.");
+                    return;
+                }
+
+                Console.WriteLine($"Текущо име: {entity.Name}");
+                var name = ReadOptional("Ново име (Enter за пропуск): ");
+
+                Console.WriteLine($"Текуща дата: {entity.Date:dd.MM.yyyy HH:mm}");
+                var dateText = ReadOptional("Нова дата и час (Enter за пропуск): ");
+
+                Console.WriteLine($"Текущ тип: {entity.EventType}");
+                var type = ReadOptional("Нов тип (Enter за пропуск): ");
+
+                Console.WriteLine($"Текущ капацитет: {entity.Capacity}");
+                var capacityText = ReadOptional("Нов капацитет (Enter за пропуск): ");
+
+                var newDate = string.IsNullOrWhiteSpace(dateText) ? entity.Date : ReadDateTimeFromInput(dateText);
+                var newCapacity = string.IsNullOrWhiteSpace(capacityText) ? entity.Capacity : ParseInt(capacityText);
+                var soldTickets = entity.Tickets.Count(t => t.Status == TicketStatus.Sold);
+                var location = locations.GetById(entity.LocationId) ?? entity.Location;
+
+                if (location == null)
+                {
+                    Message("Локацията на събитието не е намерена.");
+                    return;
+                }
+
+                if (!string.IsNullOrWhiteSpace(dateText) && !events.IsLocationAvailable(entity.LocationId, newDate, entity.Id))
+                {
+                    Message("Локацията е заета за тази дата.");
+                    return;
+                }
+
+                if (newCapacity > location.Capacity)
+                {
+                    Message("Капацитетът е по-голям от капацитета на локацията.");
+                    return;
+                }
+
+                if (!string.IsNullOrWhiteSpace(name))
+                    entity.EditName(name);
+
+                if (!string.IsNullOrWhiteSpace(dateText))
+                    entity.Reschedule(newDate);
+
+                if (!string.IsNullOrWhiteSpace(type))
+                    entity.ChangeType(type);
+
+                if (!string.IsNullOrWhiteSpace(capacityText))
+                    entity.ChangeCapacity(newCapacity, soldTickets, location.Capacity);
+
+                events.Edit(entity);
+                Message("Събитието е обновено.");
+            }
+            catch (Exception ex)
+            {
+                Message(ex.Message);
+            }
+        }
     }
 }
