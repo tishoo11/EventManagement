@@ -440,5 +440,23 @@ namespace EventManagement11.ConsoleUI
             PrintEvents(events.SearchByName(text));
             Pause();
         }
+
+        private void FilterEventsByDate()
+        {
+            Console.Clear();
+            Header("Филтър по дата");
+            var date = ReadDateTime("Дата и час (dd.MM.yyyy HH:mm): ");
+            PrintEvents(events.FilterByDate(date));
+            Pause();
+        }
+
+        private void FilterEventsByType()
+        {
+            Console.Clear();
+            Header("Филтър по тип");
+            var type = ReadRequired("Тип: ");
+            PrintEvents(events.FilterByType(type));
+            Pause();
+        }
     }
 }
