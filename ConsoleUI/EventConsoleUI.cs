@@ -921,5 +921,10 @@ namespace EventManagement11.ConsoleUI
 
             throw new FormatException("Невалидна дата.");
         }
+
+        private static int ParseInt(string input)
+        {
+            return int.Parse(input, CultureInfo.InvariantCulture);
+        }
     }
 }
