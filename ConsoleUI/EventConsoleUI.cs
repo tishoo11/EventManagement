@@ -137,5 +137,47 @@ namespace EventManagement11.ConsoleUI
                 }
             }
         }
+        private void LocationsMenu()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Header("Локации");
+                Console.WriteLine("1. Всички");
+                Console.WriteLine("2. Добавяне");
+                Console.WriteLine("3. Редактиране");
+                Console.WriteLine("4. Изтриване");
+                Console.WriteLine("5. Справка за заетост");
+                Console.WriteLine("0. Назад");
+                Console.WriteLine();
+
+                var choice = ReadInt("Избор: ");
+
+                switch (choice)
+                {
+                    case 1:
+                        PrintLocations(locations.GetAll());
+                        Pause();
+                        break;
+                    case 2:
+                        CreateLocation();
+                        break;
+                    case 3:
+                        EditLocation();
+                        break;
+                    case 4:
+                        DeleteLocation();
+                        break;
+                    case 5:
+                        LocationOccupancy();
+                        break;
+                    case 0:
+                        return;
+                    default:
+                        Message("Невалиден избор.");
+                        break;
+                }
+            }
+        }
     }
 }
