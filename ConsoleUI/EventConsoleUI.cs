@@ -33,7 +33,7 @@ namespace EventManagement11.ConsoleUI
             while (true)
             {
                 Console.Clear();
-                Header("Event Management System");
+                Header("        Event Management System");
                 Console.WriteLine("1. Събития");
                 Console.WriteLine("2. Локации");
                 Console.WriteLine("3. Организатори");
