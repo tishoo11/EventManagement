@@ -499,5 +499,39 @@ namespace EventManagement11.ConsoleUI
                 Message(ex.Message);
             }
         }
+
+        private void EditLocation()
+        {
+            try
+            {
+                Console.Clear();
+                Header("Редактиране на локация");
+
+                var id = ReadInt("Location ID: ");
+                var entity = locations.GetById(id);
+
+                if (entity == null)
+                {
+                    Message("Локацията не е намерена.");
+                    return;
+                }
+
+                Console.WriteLine($"Текущо име: {entity.Name}");
+                var name = ReadRequired("Ново име: ");
+                Console.WriteLine($"Текущ адрес: {entity.Address}");
+                var address = ReadRequired("Нов адрес: ");
+                Console.WriteLine($"Текущ капацитет: {entity.Capacity}");
+                var capacity = ReadInt("Нов капацитет: ");
+
+                entity.Edit(name, address, capacity);
+                locations.Edit(entity);
+
+                Message("Локацията е обновена.");
+            }
+            catch (Exception ex)
+            {
+                Message(ex.Message);
+            }
+        }
     }
 }
