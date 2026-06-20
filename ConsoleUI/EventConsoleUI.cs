@@ -870,5 +870,32 @@ namespace EventManagement11.ConsoleUI
             var value = Console.ReadLine();
             return string.IsNullOrWhiteSpace(value) ? null : value.Trim();
         }
+
+        private static int ReadInt(string prompt)
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                var value = Console.ReadLine();
+                if (int.TryParse(value, out var result))
+                    return result;
+
+                Console.WriteLine("Въведи валидно цяло число.");
+            }
+        }
+
+        private static decimal ReadDecimal(string prompt)
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                var value = Console.ReadLine();
+                if (decimal.TryParse(value, NumberStyles.Number, CultureInfo.CurrentCulture, out var result) ||
+                    decimal.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out result))
+                    return result;
+
+                Console.WriteLine("Въведи валидна сума.");
+            }
+        }
     }
 }
