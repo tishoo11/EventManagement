@@ -724,5 +724,14 @@ namespace EventManagement11.ConsoleUI
                 Message(ex.Message);
             }
         }
+
+        private void CancelTicket()
+        {
+            Console.Clear();
+            Header("Отмяна на билет");
+            var id = ReadInt("Ticket ID: ");
+            tickets.Cancel(id);
+            Message("Билетът е отменен.");
+        }
     }
 }
