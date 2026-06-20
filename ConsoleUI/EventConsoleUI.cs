@@ -811,5 +811,20 @@ namespace EventManagement11.ConsoleUI
                 Console.WriteLine($"#{tt.Id} | {tt.Name} | Цена: {tt.Price} | Билети: {tt.Tickets.Count}");
             }
         }
+
+        private void PrintTickets(IEnumerable<Ticket> list)
+        {
+            var items = list.ToList();
+            if (items.Count == 0)
+            {
+                Console.WriteLine("Няма записи.");
+                return;
+            }
+
+            foreach (var t in items)
+            {
+                Console.WriteLine($"#{t.Id} | Код: {t.Code} | Статус: {t.Status} | Цена: {t.Price} | EventID: {t.EventId} | TypeID: {t.TicketTypeId}");
+            }
+        }
     }
 }
