@@ -685,5 +685,44 @@ namespace EventManagement11.ConsoleUI
             ticketTypes.Delete(id);
             Message("Типът билет е изтрит.");
         }
+
+        private void CreateTicket()
+        {
+            try
+            {
+                Console.Clear();
+                Header("Генериране на билет");
+
+                var eventId = ReadInt("Event ID: ");
+                var ticketTypeId = ReadInt("TicketType ID: ");
+
+                var eventEntity = events.GetById(eventId);
+                if (eventEntity == null)
+                {
+                    Message("Събитието не е намерено.");
+                    return;
+                }
+
+                if (!events.HasCapacity(eventId))
+                {
+                    Message("Няма свободен капацитет.");
+                    return;
+                }
+
+                var ticketType = ticketTypes.GetById(ticketTypeId);
+                if (ticketType == null)
+                {
+                    Message("Типът билет не е намерен.");
+                    return;
+                }
+
+                var ticket = tickets.Create(eventId, ticketType);
+                Message($"Билетът е създаден. Код: {ticket.Code}");
+            }
+            catch (Exception ex)
+            {
+                Message(ex.Message);
+            }
+        }
     }
 }
