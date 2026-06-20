@@ -46,8 +46,6 @@ namespace EventManagement11.Domain.Entities
             if (ticketType.Price == null)
                 throw new ArgumentException("Избраният тип билет няма зададена цена.");
 
-            if (code.Trim().Length > 30)
-                throw new ArgumentException("Кодът на билета не може да съдържа повече от 30 символа.");
 
             EventId = eventId;
             TicketTypeId = ticketType.Id; 
