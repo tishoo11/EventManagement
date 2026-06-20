@@ -300,5 +300,55 @@ namespace EventManagement11.ConsoleUI
                 }
             }
         }
+
+        private void CreateEvent()
+        {
+            try
+            {
+                Console.Clear();
+                Header("Добавяне на събитие");
+
+                var name = ReadRequired("Име: ");
+                var date = ReadDateTime("Дата и час (dd.MM.yyyy HH:mm): ");
+                var locationId = ReadInt("Location ID: ");
+                var organizerId = ReadInt("Organizer ID: ");
+                var capacity = ReadInt("Капацитет: ");
+                var type = ReadRequired("Тип: ");
+
+                var location = locations.GetById(locationId);
+                if (location == null)
+                {
+                    Message("Локацията не е намерена.");
+                    return;
+                }
+
+                if (organizers.GetById(organizerId) == null)
+                {
+                    Message("Организаторът не е намерен.");
+                    return;
+                }
+
+                if (capacity > location.Capacity)
+                {
+                    Message("Капацитетът на събитието е по-голям от капацитета на локацията.");
+                    return;
+                }
+
+                if (!events.IsLocationAvailable(locationId, date))
+                {
+                    Message("Локацията е заета за тази дата.");
+                    return;
+                }
+
+                var entity = new Event(name, date, locationId, organizerId, capacity, type);
+                events.Create(entity);
+
+                Message($"Събитието е създадено. ID: {entity.Id}");
+            }
+            catch (Exception ex)
+            {
+                Message(ex.Message);
+            }
+        }
     }
 }
