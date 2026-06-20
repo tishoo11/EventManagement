@@ -17,7 +17,7 @@ namespace EventManagement11.Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-           => optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=EventManagementDB;Integrated Security=True;");
+           => optionsBuilder.UseSqlServer(@"Server=DESKTOP-N33VRK1\SQLEXPRESS;Database=EventManagementDB;Integrated Security=True;");
 
         public DbSet<Event> Events { get; set; }
         public DbSet<Location> Locations { get; set; }

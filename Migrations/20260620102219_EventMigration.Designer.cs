@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventManagement11.Migrations
 {
     [DbContext(typeof(EventDBContext))]
-    [Migration("20260610074553_EventMigration")]
+    [Migration("20260620102219_EventMigration")]
     partial class EventMigration
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace EventManagement11.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Event_Management_System.Domain.Entities.Event", b =>
+            modelBuilder.Entity("EventManagement11.Domain.Entities.Event", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -64,7 +64,7 @@ namespace EventManagement11.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("Event_Management_System.Domain.Entities.Location", b =>
+            modelBuilder.Entity("EventManagement11.Domain.Entities.Location", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -90,7 +90,7 @@ namespace EventManagement11.Migrations
                     b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("Event_Management_System.Domain.Entities.Organizer", b =>
+            modelBuilder.Entity("EventManagement11.Domain.Entities.Organizer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -113,7 +113,7 @@ namespace EventManagement11.Migrations
                     b.ToTable("Organizers");
                 });
 
-            modelBuilder.Entity("Event_Management_System.Domain.Entities.Ticket", b =>
+            modelBuilder.Entity("EventManagement11.Domain.Entities.Ticket", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -147,7 +147,7 @@ namespace EventManagement11.Migrations
                     b.ToTable("Tickets");
                 });
 
-            modelBuilder.Entity("Event_Management_System.Domain.Entities.TicketType", b =>
+            modelBuilder.Entity("EventManagement11.Domain.Entities.TicketType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -165,15 +165,15 @@ namespace EventManagement11.Migrations
                     b.ToTable("TicketTypes");
                 });
 
-            modelBuilder.Entity("Event_Management_System.Domain.Entities.Event", b =>
+            modelBuilder.Entity("EventManagement11.Domain.Entities.Event", b =>
                 {
-                    b.HasOne("Event_Management_System.Domain.Entities.Location", "Location")
+                    b.HasOne("EventManagement11.Domain.Entities.Location", "Location")
                         .WithMany("Events")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Event_Management_System.Domain.Entities.Organizer", "Organizer")
+                    b.HasOne("EventManagement11.Domain.Entities.Organizer", "Organizer")
                         .WithMany("Events")
                         .HasForeignKey("OrganizerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -184,21 +184,21 @@ namespace EventManagement11.Migrations
                     b.Navigation("Organizer");
                 });
 
-            modelBuilder.Entity("Event_Management_System.Domain.Entities.Ticket", b =>
+            modelBuilder.Entity("EventManagement11.Domain.Entities.Ticket", b =>
                 {
-                    b.HasOne("Event_Management_System.Domain.Entities.Event", null)
+                    b.HasOne("EventManagement11.Domain.Entities.Event", null)
                         .WithMany("Tickets")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Event_Management_System.Domain.Entities.TicketType", "TicketType")
+                    b.HasOne("EventManagement11.Domain.Entities.TicketType", "TicketType")
                         .WithMany("Tickets")
                         .HasForeignKey("TicketTypeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.OwnsOne("Event_Management_System.Domain.ValueObjects.Money", "Price", b1 =>
+                    b.OwnsOne("EventManagement11.Domain.ValueObjects.Money", "Price", b1 =>
                         {
                             b1.Property<int>("TicketId")
                                 .HasColumnType("int");
@@ -221,9 +221,9 @@ namespace EventManagement11.Migrations
                     b.Navigation("TicketType");
                 });
 
-            modelBuilder.Entity("Event_Management_System.Domain.Entities.TicketType", b =>
+            modelBuilder.Entity("EventManagement11.Domain.Entities.TicketType", b =>
                 {
-                    b.OwnsOne("Event_Management_System.Domain.ValueObjects.Money", "Price", b1 =>
+                    b.OwnsOne("EventManagement11.Domain.ValueObjects.Money", "Price", b1 =>
                         {
                             b1.Property<int>("TicketTypeId")
                                 .HasColumnType("int");
@@ -244,22 +244,22 @@ namespace EventManagement11.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Event_Management_System.Domain.Entities.Event", b =>
+            modelBuilder.Entity("EventManagement11.Domain.Entities.Event", b =>
                 {
                     b.Navigation("Tickets");
                 });
 
-            modelBuilder.Entity("Event_Management_System.Domain.Entities.Location", b =>
+            modelBuilder.Entity("EventManagement11.Domain.Entities.Location", b =>
                 {
                     b.Navigation("Events");
                 });
 
-            modelBuilder.Entity("Event_Management_System.Domain.Entities.Organizer", b =>
+            modelBuilder.Entity("EventManagement11.Domain.Entities.Organizer", b =>
                 {
                     b.Navigation("Events");
                 });
 
-            modelBuilder.Entity("Event_Management_System.Domain.Entities.TicketType", b =>
+            modelBuilder.Entity("EventManagement11.Domain.Entities.TicketType", b =>
                 {
                     b.Navigation("Tickets");
                 });
