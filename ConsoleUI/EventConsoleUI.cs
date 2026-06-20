@@ -781,5 +781,20 @@ namespace EventManagement11.ConsoleUI
                 Console.WriteLine($"#{l.Id} | {l.Name} | {l.Address} | Капацитет: {l.Capacity} | Събития: {l.Events.Count}");
             }
         }
+
+        private void PrintOrganizers(IEnumerable<Organizer> list)
+        {
+            var items = list.ToList();
+            if (items.Count == 0)
+            {
+                Console.WriteLine("Няма записи.");
+                return;
+            }
+
+            foreach (var o in items)
+            {
+                Console.WriteLine($"#{o.Id} | {o.Name} | {o.ContactNumber} | Събития: {o.Events.Count}");
+            }
+        }
     }
 }
