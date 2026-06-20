@@ -742,5 +742,13 @@ namespace EventManagement11.ConsoleUI
             tickets.MarkAsUsed(id);
             Message("Билетът е маркиран като използван.");
         }
+
+        private void CheckTicketValidity()
+        {
+            Console.Clear();
+            Header("Валидност на билет");
+            var id = ReadInt("Ticket ID: ");
+            Message(tickets.IsValid(id) ? "Билетът е валиден." : "Билетът не е валиден.");
+        }
     }
 }
