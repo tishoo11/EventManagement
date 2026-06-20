@@ -458,5 +458,15 @@ namespace EventManagement11.ConsoleUI
             PrintEvents(events.FilterByType(type));
             Pause();
         }
+
+        private void CheckLocationAvailability()
+        {
+            Console.Clear();
+            Header("Проверка за свободна локация");
+            var locationId = ReadInt("Location ID: ");
+            var date = ReadDateTime("Дата и час (dd.MM.yyyy HH:mm): ");
+            var available = events.IsLocationAvailable(locationId, date);
+            Message(available ? "Локацията е свободна." : "Локацията е заета.");
+        }
     }
 }
