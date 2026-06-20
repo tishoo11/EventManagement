@@ -676,5 +676,14 @@ namespace EventManagement11.ConsoleUI
                 Message(ex.Message);
             }
         }
+
+        private void DeleteTicketType()
+        {
+            Console.Clear();
+            Header("Изтриване на тип билет");
+            var id = ReadInt("TicketType ID: ");
+            ticketTypes.Delete(id);
+            Message("Типът билет е изтрит.");
+        }
     }
 }
