@@ -1,5 +1,8 @@
 using EventManagement11.Application.Interfaces;
 using EventManagement11.Domain.Entities;
+using EventManagement11.Domain.Enums;
+
+namespace EventManagement11.Application.Services;
 
 public class EventService
 {
@@ -9,6 +12,10 @@ public class EventService
     {
         this.events = events;
     }
+
+    public Event? GetById(int id) => events.GetById(id);
+
+    public IReadOnlyList<Event> GetAll() => events.GetAll();
 
     public void Create(Event entity) => events.Save(entity);
 
@@ -31,6 +38,7 @@ public class EventService
         return events
             .GetAll()
             .Where(e => e.Name.Contains(name, StringComparison.OrdinalIgnoreCase))
+            .OrderBy(e => e.Date)
             .ToList();
     }
 
@@ -66,19 +74,7 @@ public class EventService
     public bool HasCapacity(int eventId)
     {
         var entity = events.GetById(eventId);
-        return entity != null && entity.Tickets.Count < entity.Capacity;
-    }
-
-    public bool CanFitInLocation(int locationId, int capacity)
-    {
-        if (capacity <= 0)
-            return false;
-
-        var location = events
-            .GetAll()
-            .FirstOrDefault(e => e.LocationId == locationId)?.Location;
-
-        return location != null && capacity <= location.Capacity;
+        return entity != null && entity.Tickets.Count(t => t.Status == TicketStatus.Sold) < entity.Capacity;
     }
 
     public IReadOnlyList<Event> UpcomingEvents()
@@ -94,7 +90,7 @@ public class EventService
     {
         return events
             .GetAll()
-            .OrderByDescending(e => e.Tickets.Count)
+            .OrderByDescending(e => e.Tickets.Count(t => t.Status == TicketStatus.Sold))
             .ThenBy(e => e.Date)
             .ToList();
     }

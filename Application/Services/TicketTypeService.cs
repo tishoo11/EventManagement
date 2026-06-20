@@ -12,6 +12,10 @@ public class TicketTypeService
         this.ticketTypes = ticketTypes;
     }
 
+    public TicketType? GetById(int id) => ticketTypes.GetById(id);
+
+    public IReadOnlyList<TicketType> GetAll() => ticketTypes.GetAll();
+
     public void Create(TicketType entity) => ticketTypes.Save(entity);
 
     public void Edit(TicketType entity) => ticketTypes.Update(entity);
@@ -24,6 +28,4 @@ public class TicketTypeService
             ticketTypes.Delete(entity);
         }
     }
-
-    public IReadOnlyList<TicketType> GetAll() => ticketTypes.GetAll();
 }

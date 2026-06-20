@@ -1,4 +1,3 @@
-
 using EventManagement11.Application.Interfaces;
 using EventManagement11.Domain.Entities;
 
@@ -12,6 +11,10 @@ public class TicketService
     {
         this.tickets = tickets;
     }
+
+    public Ticket? GetById(int id) => tickets.GetById(id);
+
+    public IReadOnlyList<Ticket> GetAll() => tickets.GetAll();
 
     public string GenerateCode() => Guid.NewGuid().ToString("N");
 
@@ -47,6 +50,4 @@ public class TicketService
         var ticket = tickets.GetById(id);
         return ticket?.IsValid == true;
     }
-
-    public IReadOnlyList<Ticket> GetAll() => tickets.GetAll();
 }

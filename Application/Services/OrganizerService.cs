@@ -1,5 +1,6 @@
-using EventManagement11.Domain.Entities;
 using EventManagement11.Application.Interfaces;
+using EventManagement11.Domain.Entities;
+
 namespace EventManagement11.Application.Services;
 
 public class OrganizerService
@@ -10,6 +11,10 @@ public class OrganizerService
     {
         this.organizers = organizers;
     }
+
+    public Organizer? GetById(int id) => organizers.GetById(id);
+
+    public IReadOnlyList<Organizer> GetAll() => organizers.GetAll();
 
     public void Create(Organizer entity) => organizers.Save(entity);
 
@@ -23,6 +28,4 @@ public class OrganizerService
             organizers.Delete(entity);
         }
     }
-
-    public IReadOnlyList<Organizer> GetAll() => organizers.GetAll();
 }

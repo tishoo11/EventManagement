@@ -1,8 +1,8 @@
-
 using EventManagement11.Application.Interfaces;
 using EventManagement11.Domain.Entities;
 
 namespace EventManagement11.Application.Services;
+
 public class LocationService
 {
     private readonly ILocationRepository locations;
@@ -13,6 +13,10 @@ public class LocationService
         this.locations = locations;
         this.events = events;
     }
+
+    public Location? GetById(int id) => locations.GetById(id);
+
+    public IReadOnlyList<Location> GetAll() => locations.GetAll();
 
     public void Create(Location entity) => locations.Save(entity);
 
