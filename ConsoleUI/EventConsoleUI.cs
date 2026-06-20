@@ -826,5 +826,22 @@ namespace EventManagement11.ConsoleUI
                 Console.WriteLine($"#{t.Id} | Код: {t.Code} | Статус: {t.Status} | Цена: {t.Price} | EventID: {t.EventId} | TypeID: {t.TicketTypeId}");
             }
         }
+
+        private static void Header(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("=======================================");
+            Console.WriteLine(text);
+            Console.WriteLine("=======================================");
+            Console.ResetColor();
+            Console.WriteLine();
+        }
+
+        private static void Message(string text)
+        {
+            Console.WriteLine();
+            Console.WriteLine(text);
+            Pause();
+        }
     }
 }
