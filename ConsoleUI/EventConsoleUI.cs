@@ -766,5 +766,20 @@ namespace EventManagement11.ConsoleUI
                 Console.WriteLine($"#{e.Id} | {e.Name} | {e.EventType} | {e.Date:dd.MM.yyyy HH:mm} | Локация: {(e.Location?.Name ?? e.LocationId.ToString())} | Организатор: {(e.Organizer?.Name ?? e.OrganizerId.ToString())} | {soldTickets}/{e.Capacity}");
             }
         }
+
+        private void PrintLocations(IEnumerable<Location> list)
+        {
+            var items = list.ToList();
+            if (items.Count == 0)
+            {
+                Console.WriteLine("Няма записи.");
+                return;
+            }
+
+            foreach (var l in items)
+            {
+                Console.WriteLine($"#{l.Id} | {l.Name} | {l.Address} | Капацитет: {l.Capacity} | Събития: {l.Events.Count}");
+            }
+        }
     }
 }
