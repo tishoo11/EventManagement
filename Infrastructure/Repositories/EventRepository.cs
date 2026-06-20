@@ -1,7 +1,8 @@
 ﻿using EventManagement11.Application.Interfaces;
 using EventManagement11.Domain.Entities;
-using EventManagement11.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+
+namespace EventManagement11.Infrastructure.Repositories;
 
 public class EventRepository : IEventRepository
 {
@@ -12,7 +13,7 @@ public class EventRepository : IEventRepository
         this.context = context;
     }
 
-    public Event GetById(int id)
+    public Event? GetById(int id)
     {
         return context.Events
             .Include(e => e.Location)
@@ -23,7 +24,11 @@ public class EventRepository : IEventRepository
 
     public IReadOnlyList<Event> GetAll()
     {
-        return context.Events.ToList();
+        return context.Events
+            .Include(e => e.Location)
+            .Include(e => e.Organizer)
+            .Include(e => e.Tickets)
+            .ToList();
     }
 
     public void Save(Event entity)
