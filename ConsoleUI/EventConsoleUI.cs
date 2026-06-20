@@ -863,5 +863,12 @@ namespace EventManagement11.ConsoleUI
                 Console.WriteLine("Полето е задължително.");
             }
         }
+
+        private static string? ReadOptional(string prompt)
+        {
+            Console.Write(prompt);
+            var value = Console.ReadLine();
+            return string.IsNullOrWhiteSpace(value) ? null : value.Trim();
+        }
     }
 }
