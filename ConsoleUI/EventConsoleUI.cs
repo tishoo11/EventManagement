@@ -431,5 +431,14 @@ namespace EventManagement11.ConsoleUI
             events.Delete(id);
             Message("Събитието е изтрито.");
         }
+
+        private void SearchEvents()
+        {
+            Console.Clear();
+            Header("Търсене по име");
+            var text = ReadRequired("Текст: ");
+            PrintEvents(events.SearchByName(text));
+            Pause();
+        }
     }
 }
