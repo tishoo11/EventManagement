@@ -468,5 +468,14 @@ namespace EventManagement11.ConsoleUI
             var available = events.IsLocationAvailable(locationId, date);
             Message(available ? "Локацията е свободна." : "Локацията е заета.");
         }
+
+        private void CheckEventCapacity()
+        {
+            Console.Clear();
+            Header("Проверка за капацитет");
+            var eventId = ReadInt("Event ID: ");
+            var available = events.HasCapacity(eventId);
+            Message(available ? "Има свободни места." : "Капацитетът е запълнен.");
+        }
     }
 }
