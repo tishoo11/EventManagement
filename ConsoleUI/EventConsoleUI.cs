@@ -1,9 +1,8 @@
 ﻿using EventManagement11.Application.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EventManagement11.Domain.Entities;
+using EventManagement11.Domain.Enums;
+using EventManagement11.Domain.ValueObjects;
+using System.Globalization;
 
 namespace EventManagement11.ConsoleUI
 {
@@ -31,12 +30,43 @@ namespace EventManagement11.ConsoleUI
 
         public void Run()
         {
-            bool running = true;
-            while (running)
+            while (true)
             {
                 Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("=== Event Management System ===");
+                Header("Event Management System");
+                Console.WriteLine("1. Събития");
+                Console.WriteLine("2. Локации");
+                Console.WriteLine("3. Организатори");
+                Console.WriteLine("4. Типове билети");
+                Console.WriteLine("5. Билети");
+                Console.WriteLine("0. Изход");
+                Console.WriteLine();
+
+                var choice = ReadInt("Избор: ");
+
+                switch (choice)
+                {
+                    case 1:
+                        EventsMenu();
+                        break;
+                    case 2:
+                        LocationsMenu();
+                        break;
+                    case 3:
+                        OrganizersMenu();
+                        break;
+                    case 4:
+                        TicketTypesMenu();
+                        break;
+                    case 5:
+                        TicketsMenu();
+                        break;
+                    case 0:
+                        return;
+                    default:
+                        Message("Невалиден избор.");
+                        break;
+                }
             }
         }
     }
