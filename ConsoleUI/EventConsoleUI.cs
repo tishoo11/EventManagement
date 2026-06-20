@@ -750,5 +750,21 @@ namespace EventManagement11.ConsoleUI
             var id = ReadInt("Ticket ID: ");
             Message(tickets.IsValid(id) ? "Билетът е валиден." : "Билетът не е валиден.");
         }
+
+        private void PrintEvents(IEnumerable<Event> list)
+        {
+            var items = list.ToList();
+            if (items.Count == 0)
+            {
+                Console.WriteLine("Няма записи.");
+                return;
+            }
+
+            foreach (var e in items)
+            {
+                var soldTickets = e.Tickets.Count(t => t.Status == TicketStatus.Sold);
+                Console.WriteLine($"#{e.Id} | {e.Name} | {e.EventType} | {e.Date:dd.MM.yyyy HH:mm} | Локация: {(e.Location?.Name ?? e.LocationId.ToString())} | Организатор: {(e.Organizer?.Name ?? e.OrganizerId.ToString())} | {soldTickets}/{e.Capacity}");
+            }
+        }
     }
 }
