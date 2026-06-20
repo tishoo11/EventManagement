@@ -843,5 +843,12 @@ namespace EventManagement11.ConsoleUI
             Console.WriteLine(text);
             Pause();
         }
+
+        private static void Pause()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Натисни Enter...");
+            Console.ReadLine();
+        }
     }
 }
