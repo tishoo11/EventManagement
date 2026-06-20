@@ -477,5 +477,27 @@ namespace EventManagement11.ConsoleUI
             var available = events.HasCapacity(eventId);
             Message(available ? "Има свободни места." : "Капацитетът е запълнен.");
         }
+
+        private void CreateLocation()
+        {
+            try
+            {
+                Console.Clear();
+                Header("Добавяне на локация");
+
+                var name = ReadRequired("Име: ");
+                var address = ReadRequired("Адрес: ");
+                var capacity = ReadInt("Капацитет: ");
+
+                var entity = new Location(name, address, capacity);
+                locations.Create(entity);
+
+                Message($"Локацията е създадена. ID: {entity.Id}");
+            }
+            catch (Exception ex)
+            {
+                Message(ex.Message);
+            }
+        }
     }
 }
