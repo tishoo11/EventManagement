@@ -91,6 +91,50 @@ namespace EventManagement11.ConsoleUI
                 Console.WriteLine();
 
                 var choice = ReadInt("Избор: ");
+                switch (choice)
+                {
+                    case 1:
+                        PrintEvents(events.GetAll());
+                        Pause();
+                        break;
+                    case 2:
+                        CreateEvent();
+                        break;
+                    case 3:
+                        EditEvent();
+                        break;
+                    case 4:
+                        DeleteEvent();
+                        break;
+                    case 5:
+                        SearchEvents();
+                        break;
+                    case 6:
+                        FilterEventsByDate();
+                        break;
+                    case 7:
+                        FilterEventsByType();
+                        break;
+                    case 8:
+                        PrintEvents(events.UpcomingEvents());
+                        Pause();
+                        break;
+                    case 9:
+                        PrintEvents(events.MostVisitedEvents());
+                        Pause();
+                        break;
+                    case 10:
+                        CheckLocationAvailability();
+                        break;
+                    case 11:
+                        CheckEventCapacity();
+                        break;
+                    case 0:
+                        return;
+                    default:
+                        Message("Невалиден избор.");
+                        break;
+                }
             }
         }
     }
