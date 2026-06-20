@@ -584,5 +584,37 @@ namespace EventManagement11.ConsoleUI
                 Message(ex.Message);
             }
         }
+
+        private void EditOrganizer()
+        {
+            try
+            {
+                Console.Clear();
+                Header("Редактиране на организатор");
+
+                var id = ReadInt("Organizer ID: ");
+                var entity = organizers.GetById(id);
+
+                if (entity == null)
+                {
+                    Message("Организаторът не е намерен.");
+                    return;
+                }
+
+                Console.WriteLine($"Текущо име: {entity.Name}");
+                var name = ReadRequired("Ново име: ");
+                Console.WriteLine($"Текущ телефон: {entity.ContactNumber}");
+                var phone = ReadRequired("Нов телефон: ");
+
+                entity.Edit(name, phone);
+                organizers.Edit(entity);
+
+                Message("Организаторът е обновен.");
+            }
+            catch (Exception ex)
+            {
+                Message(ex.Message);
+            }
+        }
     }
 }
