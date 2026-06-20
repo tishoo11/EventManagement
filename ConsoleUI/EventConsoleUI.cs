@@ -257,5 +257,48 @@ namespace EventManagement11.ConsoleUI
                 }
             }
         }
+
+        private void TicketsMenu()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Header("Билети");
+                Console.WriteLine("1. Всички");
+                Console.WriteLine("2. Генериране");
+                Console.WriteLine("3. Отмяна");
+                Console.WriteLine("4. Маркиране като използван");
+                Console.WriteLine("5. Проверка за валидност");
+                Console.WriteLine("0. Назад");
+                Console.WriteLine();
+
+                var choice = ReadInt("Избор: ");
+
+                switch (choice)
+                {
+                    case 1:
+                        PrintTickets(tickets.GetAll());
+                        Pause();
+                        break;
+                    case 2:
+                        CreateTicket();
+                        break;
+                    case 3:
+                        CancelTicket();
+                        break;
+                    case 4:
+                        MarkTicketAsUsed();
+                        break;
+                    case 5:
+                        CheckTicketValidity();
+                        break;
+                    case 0:
+                        return;
+                    default:
+                        Message("Невалиден избор.");
+                        break;
+                }
+            }
+        }
     }
 }
