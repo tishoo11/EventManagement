@@ -179,5 +179,44 @@ namespace EventManagement11.ConsoleUI
                 }
             }
         }
+
+        private void OrganizersMenu()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Header("Организатори");
+                Console.WriteLine("1. Всички");
+                Console.WriteLine("2. Добавяне");
+                Console.WriteLine("3. Редактиране");
+                Console.WriteLine("4. Изтриване");
+                Console.WriteLine("0. Назад");
+                Console.WriteLine();
+
+                var choice = ReadInt("Избор: ");
+
+                switch (choice)
+                {
+                    case 1:
+                        PrintOrganizers(organizers.GetAll());
+                        Pause();
+                        break;
+                    case 2:
+                        CreateOrganizer();
+                        break;
+                    case 3:
+                        EditOrganizer();
+                        break;
+                    case 4:
+                        DeleteOrganizer();
+                        break;
+                    case 0:
+                        return;
+                    default:
+                        Message("Невалиден избор.");
+                        break;
+                }
+            }
+        }
     }
 }
