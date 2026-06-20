@@ -542,5 +542,26 @@ namespace EventManagement11.ConsoleUI
             locations.Delete(id);
             Message("Локацията е изтрита.");
         }
+
+        private void LocationOccupancy()
+        {
+            Console.Clear();
+            Header("Справка за заетост на локация");
+            var id = ReadInt("Location ID: ");
+            var entity = locations.GetById(id);
+
+            if (entity == null)
+            {
+                Message("Локацията не е намерена.");
+                return;
+            }
+
+            Console.WriteLine($"Локация: {entity.Name}");
+            Console.WriteLine($"Събития: {locations.GetOccupancy(id)}");
+            Console.WriteLine();
+
+            PrintEvents(entity.Events.OrderBy(e => e.Date));
+            Pause();
+        }
     }
 }
