@@ -897,5 +897,20 @@ namespace EventManagement11.ConsoleUI
                 Console.WriteLine("Въведи валидна сума.");
             }
         }
+
+        private static DateTime ReadDateTime(string prompt)
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                var value = Console.ReadLine();
+
+                if (DateTime.TryParseExact(value, new[] { "dd.MM.yyyy HH:mm", "dd.MM.yyyy" }, CultureInfo.CurrentCulture, DateTimeStyles.None, out var result) ||
+                    DateTime.TryParseExact(value, new[] { "dd.MM.yyyy HH:mm", "dd.MM.yyyy" }, CultureInfo.InvariantCulture, DateTimeStyles.None, out result))
+                    return result;
+
+                Console.WriteLine("Въведи валидна дата. Пример: 20.06.2026 18:30");
+            }
+        }
     }
 }
