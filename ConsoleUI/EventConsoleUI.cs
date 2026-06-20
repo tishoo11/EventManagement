@@ -218,5 +218,44 @@ namespace EventManagement11.ConsoleUI
                 }
             }
         }
+
+        private void TicketTypesMenu()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Header("Типове билети");
+                Console.WriteLine("1. Всички");
+                Console.WriteLine("2. Добавяне");
+                Console.WriteLine("3. Редактиране на цена");
+                Console.WriteLine("4. Изтриване");
+                Console.WriteLine("0. Назад");
+                Console.WriteLine();
+
+                var choice = ReadInt("Избор: ");
+
+                switch (choice)
+                {
+                    case 1:
+                        PrintTicketTypes(ticketTypes.GetAll());
+                        Pause();
+                        break;
+                    case 2:
+                        CreateTicketType();
+                        break;
+                    case 3:
+                        EditTicketType();
+                        break;
+                    case 4:
+                        DeleteTicketType();
+                        break;
+                    case 0:
+                        return;
+                    default:
+                        Message("Невалиден избор.");
+                        break;
+                }
+            }
+        }
     }
 }
