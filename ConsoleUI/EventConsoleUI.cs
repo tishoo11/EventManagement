@@ -533,5 +533,14 @@ namespace EventManagement11.ConsoleUI
                 Message(ex.Message);
             }
         }
+
+        private void DeleteLocation()
+        {
+            Console.Clear();
+            Header("Изтриване на локация");
+            var id = ReadInt("Location ID: ");
+            locations.Delete(id);
+            Message("Локацията е изтрита.");
+        }
     }
 }
