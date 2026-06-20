@@ -625,5 +625,26 @@ namespace EventManagement11.ConsoleUI
             organizers.Delete(id);
             Message("Организаторът е изтрит.");
         }
+
+        private void CreateTicketType()
+        {
+            try
+            {
+                Console.Clear();
+                Header("Добавяне на тип билет");
+
+                var name = ReadRequired("Име: ");
+                var price = ReadDecimal("Цена: ");
+
+                var entity = new TicketType(name, new Money(price));
+                ticketTypes.Create(entity);
+
+                Message($"Типът е създаден. ID: {entity.Id}");
+            }
+            catch (Exception ex)
+            {
+                Message(ex.Message);
+            }
+        }
     }
 }
