@@ -850,5 +850,18 @@ namespace EventManagement11.ConsoleUI
             Console.WriteLine("Натисни Enter...");
             Console.ReadLine();
         }
+
+        private static string ReadRequired(string prompt)
+        {
+            while (true)
+            {
+                Console.Write(prompt);
+                var value = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(value))
+                    return value.Trim();
+
+                Console.WriteLine("Полето е задължително.");
+            }
+        }
     }
 }
