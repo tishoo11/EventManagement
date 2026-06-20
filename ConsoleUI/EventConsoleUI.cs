@@ -646,5 +646,35 @@ namespace EventManagement11.ConsoleUI
                 Message(ex.Message);
             }
         }
+
+        private void EditTicketType()
+        {
+            try
+            {
+                Console.Clear();
+                Header("Редактиране на цена");
+
+                var id = ReadInt("TicketType ID: ");
+                var entity = ticketTypes.GetById(id);
+
+                if (entity == null)
+                {
+                    Message("Типът билет не е намерен.");
+                    return;
+                }
+
+                Console.WriteLine($"Текуща цена: {entity.Price}");
+                var price = ReadDecimal("Нова цена: ");
+
+                entity.ChangePrice(new Money(price));
+                ticketTypes.Edit(entity);
+
+                Message("Цената е обновена.");
+            }
+            catch (Exception ex)
+            {
+                Message(ex.Message);
+            }
+        }
     }
 }
