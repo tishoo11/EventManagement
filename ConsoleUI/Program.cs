@@ -1,4 +1,6 @@
 ﻿using EventManagement11.Application.Services;
+using EventManagement11.Domain.Entities;
+using EventManagement11.Domain.ValueObjects;
 using EventManagement11.Infrastructure;
 using EventManagement11.Infrastructure.Repositories;
 
@@ -28,7 +30,8 @@ internal static class Program
             organizerService,
             ticketTypeService,
             ticketService);
-
+        
         ui.Run();
     }
+    
 }

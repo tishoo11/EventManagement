@@ -58,10 +58,7 @@
             Events = new List<Event>();
         }
 
-        public void Edit(
-            string name,
-            string address,
-            int capacity)
+        public void Edit(string name, string address,int capacity)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
