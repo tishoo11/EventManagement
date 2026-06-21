@@ -33,5 +33,5 @@ internal static class Program
         
         ui.Run();
     }
-    
+
 }
