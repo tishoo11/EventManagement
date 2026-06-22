@@ -37,11 +37,23 @@ namespace EventManagement11.ConsoleUI
             {
                 Console.Clear();
                 Header("ГЛАВНО МЕНЮ | EVENT MANAGEMENT SYSTEM");
+
+                try
+                {
+                    int totalEvents = events.GetAll().Count();
+                    int totalSoldTickets = tickets.GetAll().Count(t => t.Status == TicketStatus.Sold);
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine($"  [СТАТИСТИКА] Активни събития: {totalEvents} | Общо продадени билети: {totalSoldTickets}");
+                    Console.WriteLine("  " + new string('-', 60));
+                    Console.ResetColor();
+                }
+                catch { }
+
                 Console.WriteLine("  1. Събития");
                 Console.WriteLine("  2. Локации");
                 Console.WriteLine("  3. Организатори");
                 Console.WriteLine("  4. Типове билети");
-                Console.WriteLine("  5. Biлети");
+                Console.WriteLine("  5. Билети");
                 Console.WriteLine("  0. Изход");
                 Console.WriteLine();
 
@@ -184,12 +196,12 @@ namespace EventManagement11.ConsoleUI
             while (true)
             {
                 Console.Clear();
-                Header("МЕНЮ | БИЛЕТИ");
-                Console.WriteLine("  1. Всички билети");
-                Console.WriteLine("  2. Генериране");
-                Console.WriteLine("  3. Отмяна");
-                Console.WriteLine("  4. Маркиране като използван");
-                Console.WriteLine("  5. Проверка за валидност");
+                Header("ПАСАЖ И КАСА | УПРАВЛЕНИЕ НА БИЛЕТИ");
+                Console.WriteLine("  1. Списък на всички издадени билети");
+                Console.WriteLine("  2. [КАСА] Продажба и издаване на билет");
+                Console.WriteLine("  3. [ОТМЯНА] Анулиране/Връщане на билет");
+                Console.WriteLine("  4. [ВХОД] Сканиране и маркиране като използван");
+                Console.WriteLine("  5. Проверка на валидност на код");
                 Console.WriteLine("  0. Назад");
                 Console.WriteLine();
 
@@ -314,7 +326,6 @@ namespace EventManagement11.ConsoleUI
             }
 
             Console.WriteLine("\n--- Въведи нови данни (Enter за запазване на текущите, 0 за отказ) ---");
-
             var name = ReadOptionalText($"Ново име [{entity.Name}]: ");
             if (name == "0") return;
 
@@ -323,10 +334,8 @@ namespace EventManagement11.ConsoleUI
 
             var type = ReadOptionalText($"Нов тип [{entity.EventType}]: ");
             if (type == "0") return;
-
             var capacityText = ReadOptionalText($"Нов капацитет [{entity.Capacity}]: ");
             if (capacityText == "0") return;
-
             try
             {
                 var newDate = string.IsNullOrWhiteSpace(dateText) ? entity.Date : ReadDateTimeFromInput(dateText);
@@ -336,12 +345,14 @@ namespace EventManagement11.ConsoleUI
 
                 if (!string.IsNullOrWhiteSpace(dateText) && !events.IsLocationAvailable(entity.LocationId, newDate, entity.Id))
                 {
-                    MessageError("Локацията е заета за тази нова дата."); Pause(); return;
+                    MessageError("Локацията е заета за тази нова дата.");
+                    Pause(); return;
                 }
 
                 if (newCapacity > location.Capacity)
                 {
-                    MessageError($"Капацитетът е по-голям от капацитета на локацията (макс. {location.Capacity})."); Pause(); return;
+                    MessageError($"Капацитетът е по-голям от капацитета на локацията (макс. {location.Capacity}).");
+                    Pause(); return;
                 }
 
                 if (!string.IsNullOrWhiteSpace(name)) entity.EditName(name);
@@ -427,7 +438,6 @@ namespace EventManagement11.ConsoleUI
             PrintLocations(allLocs);
             var locId = ReadId("\nID на локация (0 за отказ): ");
             if (locId == null) return;
-
             if (locations.GetById(locId.Value) == null) { MessageError("Локация не е намерена."); Pause(); return; }
 
             var date = ReadDateTimeInput("Дата и час (dd.MM.yyyy HH:mm) (0 за отказ): ");
@@ -448,7 +458,6 @@ namespace EventManagement11.ConsoleUI
             PrintEvents(allEvs);
             var evId = ReadId("\nID на събитие (0 за отказ): ");
             if (evId == null) return;
-
             if (events.GetById(evId.Value) == null) { MessageError("Събитие не е намерено."); Pause(); return; }
 
             if (events.HasCapacity(evId.Value)) MessageSuccess("Има свободни места за събитието.");
@@ -463,13 +472,10 @@ namespace EventManagement11.ConsoleUI
 
             var name = ReadRequiredText("Име (0 за отказ): ");
             if (name == null) return;
-
             var address = ReadRequiredText("Адрес (0 за отказ): ");
             if (address == null) return;
-
-            var capacity = ReadId("Капацитет (0 за отказ): ");
+            var capacity = ReadId("Капацетет (0 за отказ): ");
             if (capacity == null) return;
-
             try
             {
                 var entity = new Location(name, address, capacity.Value);
@@ -509,7 +515,6 @@ namespace EventManagement11.ConsoleUI
             Console.WriteLine($"Текущ капацитет: {entity.Capacity}");
             var capacity = ReadId("Нов капацитет (0 за отказ): ");
             if (capacity == null) return;
-
             try
             {
                 entity.Edit(name, address, capacity.Value);
@@ -566,10 +571,8 @@ namespace EventManagement11.ConsoleUI
             Header("ДОБАВЯНЕ НА ОРГАНИЗАТОР");
             var name = ReadRequiredText("Име (0 за отказ): ");
             if (name == null) return;
-
             var phone = ReadRequiredText("Телефон (0 за отказ): ");
             if (phone == null) return;
-
             try
             {
                 var entity = new Organizer(name, phone);
@@ -605,7 +608,6 @@ namespace EventManagement11.ConsoleUI
             Console.WriteLine($"Текущ телефон: {entity.ContactNumber}");
             var phone = ReadRequiredText("Нов телефон (0 за отказ): ");
             if (phone == null) return;
-
             try
             {
                 entity.Edit(name, phone);
@@ -642,10 +644,8 @@ namespace EventManagement11.ConsoleUI
             Header("ДОБАВЯНЕ НА ТИП БИЛЕТ");
             var name = ReadRequiredText("Име (0 за отказ): ");
             if (name == null) return;
-
             var price = ReadDecimalInput("Цена (0 за отказ): ");
             if (price == null) return;
-
             try
             {
                 var entity = new TicketType(name, new Money(price.Value));
@@ -677,7 +677,6 @@ namespace EventManagement11.ConsoleUI
             Console.WriteLine($"\nТекуща цена: {entity.Price}");
             var price = ReadDecimalInput("Нова цена (0 за отказ): ");
             if (price == null) return;
-
             try
             {
                 entity.ChangePrice(new Money(price.Value));
@@ -711,89 +710,175 @@ namespace EventManagement11.ConsoleUI
         private void CreateTicket()
         {
             Console.Clear();
-            Header("ГЕНЕРИРАНЕ НА БИЛЕТ");
+            Header("КАСА | ПРОДАЖБА И ИЗДАВАНЕ НА БИЛЕТ");
             var allEvents = events.GetAll().ToList();
-            if (!allEvents.Any()) { MessageError("Няма събития."); Pause(); return; }
-
-            PrintEvents(allEvents);
-            int? eventId;
-            while (true)
+            if (!allEvents.Any())
             {
-                eventId = ReadId("\nID на събитие (0 за отказ): ");
-                if (eventId == null) return;
-                if (events.GetById(eventId.Value) != null) break;
-                MessageError("Събитието не е намерено.");
+                MessageError("Няма регистрирани събития. Първо създайте събитие.");
+                Pause();
+                return;
             }
 
-            if (!events.HasCapacity(eventId.Value)) { MessageError("Няма свободен капацитет за това събитие."); Pause(); return; }
+            Console.WriteLine("--- Изберете събитие за продажба ---");
+            PrintEvents(allEvents);
+
+            int? eventId = ReadId("\nВъведете ID на събитието (0 за отказ): ");
+            if (eventId == null) return;
+
+            var selectedEvent = events.GetById(eventId.Value);
+            if (selectedEvent == null)
+            {
+                MessageError("Събитието не е намерено.");
+                Pause();
+                return;
+            }
+
+            int soldCount = selectedEvent.Tickets.Count(t => t.Status == TicketStatus.Sold);
+            int availableSeats = selectedEvent.Capacity - soldCount;
+
+            if (availableSeats <= 0)
+            {
+                MessageError($"Капацитетът за '{selectedEvent.Name}' е запълнен ({soldCount}/{selectedEvent.Capacity}). Не може да се издаде билет!");
+                Pause();
+                return;
+            }
 
             var allTypes = ticketTypes.GetAll().ToList();
-            if (!allTypes.Any()) { MessageError("Няма типове билети."); Pause(); return; }
-
-            Console.WriteLine();
-            PrintTicketTypes(allTypes);
-            int? typeId;
-            TicketType type;
-            while (true)
+            if (!allTypes.Any())
             {
-                typeId = ReadId("\nID на тип билет (0 за отказ): ");
-                if (typeId == null) return;
-                type = ticketTypes.GetById(typeId.Value);
-                if (type != null) break;
+                MessageError("Няма дефинирани ценови категории (типове билети) в системата.");
+                Pause();
+                return;
+            }
+
+            Console.WriteLine($"\nИзбрано събитие: {selectedEvent.Name}");
+            Console.WriteLine($"Остават свободни места: {availableSeats} от общо {selectedEvent.Capacity}");
+            Console.WriteLine("\n--- Изберете ценова категория ---");
+            PrintTicketTypes(allTypes);
+
+            int? typeId = ReadId("\nВъведете ID на типа билет (0 за отказ): ");
+            if (typeId == null) return;
+
+            var type = ticketTypes.GetById(typeId.Value);
+            if (type == null)
+            {
                 MessageError("Типът билет не е намерен.");
+                Pause();
+                return;
+            }
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"\n[ПОТВЪРЖДЕНИЕ] Покупка на билет за: \"{selectedEvent.Name}\"");
+            Console.WriteLine($"Категория: {type.Name} | Дължима сума: {type.Price} лв.");
+            Console.ResetColor();
+            Console.Write("Завършване на продажбата? (yes/no): ");
+            string conf = Console.ReadLine()?.Trim().ToLower();
+            if (conf != "y" && conf != "ye" && conf != "yes")
+            {
+                Console.WriteLine("Продажбата е отказана.");
+                Pause();
+                return;
             }
 
             try
             {
                 var ticket = tickets.Create(eventId.Value, type);
-                MessageSuccess($"Билетът е генериран успешно! КОД: {ticket.Code}");
+
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("\n=============================================");
+                Console.WriteLine("         БИЛЕТЪТ Е ГЕНЕРИРАН УСПЕШНО!        ");
+                Console.WriteLine("=============================================");
+                Console.WriteLine($"  СЪБИТИЕ:   {selectedEvent.Name}");
+                Console.WriteLine($"  ДАТА/ЧАС:  {selectedEvent.Date:dd.MM.yyyy HH:mm}");
+                Console.WriteLine($"  КАТЕГОРИЯ: {type.Name}");
+                Console.WriteLine($"  ЦЕНА:      {type.Price} лв.");
+                Console.WriteLine($"  УНИКАЛЕН КОД: {ticket.Code}");
+                Console.WriteLine("=============================================");
+                Console.ResetColor();
+                Pause();
             }
-            catch (Exception ex) { MessageError(ex.Message); Pause(); }
+            catch (Exception ex)
+            {
+                MessageError($"Грешка: {ex.Message}");
+                Pause();
+            }
         }
 
         private void CancelTicket()
         {
             Console.Clear();
-            Header("ОТМЯНА НА БИЛЕТ");
+            Header("ОТМЯНА / АНУЛИРАНЕ НА БИЛЕТ");
             var allT = tickets.GetAll().ToList();
-            if (!allT.Any()) { MessageError("Няма билети."); Pause(); return; }
+            if (!allT.Any()) { MessageError("Няма издадени билети."); Pause(); return; }
 
             PrintTickets(allT);
-            int? id = ReadId("\nID на билет (0 за отказ): ");
+            int? id = ReadId("\nВъведете ID на билет за отмяна (0 за отказ): ");
             if (id == null) return;
 
-            try { tickets.Cancel(id.Value); MessageSuccess("Билетът е отменен."); }
+            try
+            {
+                tickets.Cancel(id.Value);
+                MessageSuccess("Билетът е успешно АНУЛИРАН. Мястото в събитието е освободено.");
+            }
             catch (Exception ex) { MessageError(ex.Message); Pause(); }
         }
 
         private void MarkTicketAsUsed()
         {
             Console.Clear();
-            Header("МАРКИРАНЕ НА БИЛЕТ");
+            Header("ВХОДЕН КОНТРОЛ | СКАНИРАНЕ НА БИЛЕТ");
             var allT = tickets.GetAll().ToList();
-            if (!allT.Any()) { MessageError("Няма билети."); Pause(); return; }
+            if (!allT.Any()) { MessageError("Няма издадени билети."); Pause(); return; }
 
             PrintTickets(allT);
-            int? id = ReadId("\nID на билет (0 за отказ): ");
+            int? id = ReadId("\nВъведете ID на билет за проверка на входа (0 за отказ): ");
             if (id == null) return;
 
-            try { tickets.MarkAsUsed(id.Value); MessageSuccess("Билетът е използван."); }
-            catch (Exception ex) { MessageError(ex.Message); Pause(); }
+            try
+            {
+                tickets.MarkAsUsed(id.Value);
+                MessageSuccess("Билетът беше УСПЕШНО СКАНИРАН! Посетителят може да влезе.");
+            }
+            catch (Exception ex) { MessageError($"[ДОСТЪП ОТКАЗАН] {ex.Message}"); Pause(); }
         }
 
         private void CheckTicketValidity()
         {
             Console.Clear();
-            Header("ПРОВЕРКА ЗА ВАЛИДНОСТ");
+            Header("ИНСПЕКЦИЯ | ПРОВЕРКА НА БИЛЕТ");
             var allT = tickets.GetAll().ToList();
-            if (!allT.Any()) { MessageError("Няма билети."); Pause(); return; }
+            if (!allT.Any()) { MessageError("Няма налични билети."); Pause(); return; }
 
             PrintTickets(allT);
-            int? id = ReadId("\nID на билет (0 за отказ): ");
+            int? id = ReadId("\nВъведете ID на билет за проверка (0 за отказ): ");
             if (id == null) return;
 
-            if (tickets.IsValid(id.Value)) MessageSuccess("Билетът е ВАЛИДЕН.");
-            else MessageError("Билетът е НЕВАЛИДЕН или вече използван.");
+            var ticket = allT.FirstOrDefault(t => t.Id == id.Value);
+            if (ticket == null)
+            {
+                MessageError("Билетът не съществува в базата данни.");
+                Pause();
+                return;
+            }
+
+            var ev = events.GetById(ticket.EventId);
+
+            Console.WriteLine("\n--- Справка от системата ---");
+            Console.WriteLine($"Код: {ticket.Code}");
+            Console.WriteLine($"Събитие: {(ev != null ? ev.Name : "Неизвестно")}");
+
+            if (tickets.IsValid(id.Value))
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("\n[✓] БИЛЕТЪТ Е НАПЪЛНО ВАЛИДЕН И АКТИВЕН.");
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"\n[X] БИЛЕТЪТ Е НЕВАЛИДЕН. Текущ статус: {ticket.Status}");
+                Console.ResetColor();
+            }
             Pause();
         }
 
@@ -861,11 +946,40 @@ namespace EventManagement11.ConsoleUI
             var items = list.ToList();
             if (!items.Any()) { Console.WriteLine(" Няма намерени билети."); return; }
 
-            Console.WriteLine(string.Format(" {0,-4} | {1,-10} | {2,-12} | {3,-10} | {4,-10}", "ID", "Код", "Статус", "Събитие ID", "Тип ID"));
-            Console.WriteLine(new string('-', 65));
+            Console.WriteLine(string.Format(" {0,-4} | {1,-10} | {2,-12} | {3,-18} | {4,-20}", "ID", "Код", "Статус", "Събитие", "Категория (Цена)"));
+            Console.WriteLine(new string('-', 75));
             foreach (var t in items)
             {
-                Console.WriteLine(string.Format(" #{0,-3} | {1,-10} | {2,-12} | {3,-10} | {4,-10}", t.Id, t.Code, t.Status, t.EventId, t.TicketTypeId));
+                var ev = events.GetById(t.EventId);
+                var tt = ticketTypes.GetById(t.TicketTypeId);
+
+                string eventName = ev != null ? (ev.Name.Length > 18 ? ev.Name.Substring(0, 15) + "..." : ev.Name) : $"ID #{t.EventId}";
+                string typeName = tt != null ? $"{tt.Name} ({tt.Price}лв)" : $"ID #{t.TicketTypeId}";
+
+                Console.Write($" #{t.Id,-3} | {t.Code,-10} | ");
+
+                switch (t.Status)
+                {
+                    case TicketStatus.Sold:
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(string.Format("{0,-12}", "Продаден"));
+                        break;
+                    case TicketStatus.Canceled:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write(string.Format("{0,-12}", "Анулиран"));
+                        break;
+                    case TicketStatus.Used:
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.Write(string.Format("{0,-12}", "Използван"));
+                        break;
+                    default:
+                        Console.ResetColor();
+                        Console.Write(string.Format("{0,-12}", t.Status));
+                        break;
+                }
+                Console.ResetColor();
+
+                Console.WriteLine($" | {eventName,-18} | {typeName,-20}");
             }
         }
 
@@ -966,10 +1080,7 @@ namespace EventManagement11.ConsoleUI
                 Console.ResetColor();
 
                 if (value == "0") return null;
-
-                if (decimal.TryParse(value, out var result))
-                    return result;
-
+                if (decimal.TryParse(value, out var result)) return result;
                 MessageError("Въведете валидна сума.");
             }
         }
@@ -984,10 +1095,8 @@ namespace EventManagement11.ConsoleUI
                 Console.ResetColor();
 
                 if (value == "0") return null;
-
                 if (DateTime.TryParseExact(value, new[] { "dd.MM.yyyy HH:mm", "dd.MM.yyyy" }, null, DateTimeStyles.None, out var result))
                     return result;
-
                 MessageError("Въведете валидна дата във формат 20.06.2026 18:30");
             }
         }
@@ -996,7 +1105,6 @@ namespace EventManagement11.ConsoleUI
         {
             if (DateTime.TryParseExact(input, new[] { "dd.MM.yyyy HH:mm", "dd.MM.yyyy" }, null, DateTimeStyles.None, out var result))
                 return result;
-
             throw new FormatException("Невалидна дата.");
         }
 

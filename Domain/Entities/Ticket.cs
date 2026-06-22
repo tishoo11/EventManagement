@@ -59,18 +59,18 @@ namespace EventManagement11.Domain.Entities
 
         public void Cancel()
         {
-            if (Status == TicketStatus.Cancelled)
+            if (Status == TicketStatus.Canceled)
                 throw new InvalidOperationException("Билетът вече е отменен.");
 
             if (Status == TicketStatus.Used)
                 throw new InvalidOperationException("Използван билет не може да бъде отменен.");
 
-            Status = TicketStatus.Cancelled;
+            Status = TicketStatus.Canceled;
         }
 
         public void MarkAsUsed()
         {
-            if (Status == TicketStatus.Cancelled)
+            if (Status == TicketStatus.Canceled)
                 throw new InvalidOperationException("Отменен билет не може да бъде използван.");
 
 
