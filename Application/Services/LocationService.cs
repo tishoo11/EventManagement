@@ -1,5 +1,6 @@
 using EventManagement11.Application.Interfaces;
 using EventManagement11.Domain.Entities;
+using EventManagement11.Infrastructure;
 
 namespace EventManagement11.Application.Services;
 
@@ -7,11 +8,17 @@ public class LocationService
 {
     private readonly ILocationRepository locations;
     private readonly IEventRepository events;
+    private EventDBContext context;
 
     public LocationService(ILocationRepository locations, IEventRepository events)
     {
         this.locations = locations;
         this.events = events;
+    }
+
+    public LocationService(EventDBContext context)
+    {
+        this.context = context;
     }
 
     public Location? GetById(int id) => locations.GetById(id);

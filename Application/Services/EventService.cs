@@ -1,16 +1,23 @@
 using EventManagement11.Application.Interfaces;
 using EventManagement11.Domain.Entities;
 using EventManagement11.Domain.Enums;
+using EventManagement11.Infrastructure;
 
 namespace EventManagement11.Application.Services;
 
 public class EventService
 {
     private readonly IEventRepository events;
+    private EventDBContext context;
 
     public EventService(IEventRepository events)
     {
         this.events = events;
+    }
+
+    public EventService(EventDBContext context)
+    {
+        this.context = context;
     }
 
     public Event? GetById(int id) => events.GetById(id);

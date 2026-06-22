@@ -1,15 +1,22 @@
 using EventManagement11.Application.Interfaces;
 using EventManagement11.Domain.Entities;
+using EventManagement11.Infrastructure;
 
 namespace EventManagement11.Application.Services;
 
 public class TicketService
 {
     private readonly ITicketRepository tickets;
+    private EventDBContext context;
 
     public TicketService(ITicketRepository tickets)
     {
         this.tickets = tickets;
+    }
+
+    public TicketService(EventDBContext context)
+    {
+        this.context = context;
     }
 
     public Ticket? GetById(int id) => tickets.GetById(id);
